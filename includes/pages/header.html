@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>
+        <?php
+        // Проверяем, установлена ли переменная $title
+        if (isset($title)){
+            // Если установлена, выводим её значение
+            echo $title;
+        } else {
+            // Если не установлена, выводим стандартное название
+            echo 'MoiNeSam: Мой не сам и сайм не мой';
+        }
+        ?>
+    </title>
+</head>
+<body>
+    
+    <div class="header">
+
+        <div class="header__logo">
+            <h4>MoiNEsam</h4>
+        </div>
+
+        <div class="navigation">
+            <ul class="nav_links">
+                <?php
+
+                // Проверяем, запущена ли сессия, если нет - запускаем
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                
+                // Массив страниц и их ссылок
+                $pages = array(
+                    "Главная" => "index.php", 
+                    "Мои заявки" => 'all_orders.php', 
+                    "Создать заявку" => 'create_order.php', 
+                    "Войти" => 'login.php', 
+                    "Зарегистрироваться" => 'registration.php',
+                    "Выйти" => 'logout.php'
+                    );
+
+                // Получаем имя текущего файла
+                $this_page = basename($_SERVER['PHP_SELF']);
+
+                // Проходим по массиву страниц
+                foreach($pages as $page => $link){
+
+                    // Проверяем, авторизован ли пользователь
+                    if(isset($_SESSION['user_id'])){
+                        // Если авторизован, не показываем ссылки на вход и регистрацию
+                        if ($page != "Войти" && $page != "Зарегистрироваться") {
+                            // Если текущая страница совпадает с ссылкой, добавляем класс active_link
+                            if ($this_page == $link){
+                                echo "<li><a href='$link' class='active_link'>$page</a></li>";
+                            } else {
+                                echo "<li><a href='$link'>$page</a></li>";                                
+                            }
+                        }
+                    } else {
+                        // Если не авторизован, показываем только главную, вход и регистрацию
+                        if ($page == "Главная" || $page == "Войти" || $page == "Зарегистрироваться") {
+                            // Если текущая страница совпадает с ссылкой, добавляем класс active_link
+                            if ($this_page == $link){
+                                echo "<li><a href='$link' class='active_link'>$page</a></li>";
+                            } else {
+                                echo "<li><a href='$link'>$page</a></li>";                                
+                            }
+                        }
+                    }
+                }
+                ?>
+
+            </ul>
+        </div>
+    </div>
+
+
+</body>
+</html>
