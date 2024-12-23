@@ -3,48 +3,54 @@
  * Файл авторизации пользователя.
  * 
  * Подключает конфигурационный файл и файл с настройками базы данных.
- * Обрабатывает форму авторизации, проверяет введенные данные и ...
+ * Обрабатывает форму авторизации, проверяет введенные данные и выполняет вход пользователя.
  */
 
 require '../config/config.inc.php'; // Подключение конфигурационного файла
 require MYSQL; // Подключение файла с настройками базы данных
 
+
 $login_errors = array(); // Массив для хранения ошибок регистрации
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+    // Проверка наличия имени пользователя
     if (!empty($_POST['username'])){
         $username = escape_data($_POST['username'], $dbc);
     } else {
         $login_errors['username'] = "Логин не может быть пустой!";
     }
 
+    // Проверка наличия пароля
     if (!empty($_POST['password'])){
         $pass = escape_data($_POST['password'], $dbc);
     } else {
         $login_errors['password'] = "Пароль не может быть пустой!";
     }
 
-
+    // Если нет ошибок, проверка данных пользователя в базе данных
     if (empty($login_errors)){
 
         $q = "SELECT id, login, role, password FROM users WHERE login='$username'";
         $r = mysqli_query($dbc, $q);
 
+        // Если пользователь найден
         if (mysqli_num_rows($r) === 1) {
             $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
+            // Проверка пароля
             if (password_verify($pass, $row['password'])) {
                 // Создание новой сессии для администратора
                 if ($row['role'] === 'admin') {
                     session_regenerate_id(true);
                     $_SESSION['user_admin'] = true;
+                } else {
+                    $_SESSION['user_admin'] = false;
                 }
 
                 // Сохранение данных пользователя в сессии
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['username'] = $row['username'];
-
 
                 // Перенаправление пользователя
                 header('Location: index.php');
@@ -98,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                     </div>
                     
                     <div class="input-group">
-                        <input name="password" type="text" placeholder="Введите пароль">
+                        <input name="password" type="password" placeholder="Введите пароль">
                         <label for="password"><?php if (!empty($login_errors['password'])){
                             echo $login_errors['password'];
                         }?></label>

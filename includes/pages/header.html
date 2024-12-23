@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/style.css">
     <title>
         <?php
@@ -41,7 +42,8 @@
                     "Создать заявку" => 'create_order.php', 
                     "Войти" => 'login.php', 
                     "Зарегистрироваться" => 'registration.php',
-                    "Выйти" => 'logout.php'
+                    "Выйти" => 'logout.php',
+                    "Заявки" => 'admin_panel.php',
                     );
 
                 // Получаем имя текущего файла
@@ -50,26 +52,32 @@
                 // Проходим по массиву страниц
                 foreach($pages as $page => $link){
 
-                    // Проверяем, авторизован ли пользователь
                     if(isset($_SESSION['user_id'])){
-                        // Если авторизован, не показываем ссылки на вход и регистрацию
-                        if ($page != "Войти" && $page != "Зарегистрироваться") {
-                            // Если текущая страница совпадает с ссылкой, добавляем класс active_link
-                            if ($this_page == $link){
-                                echo "<li><a href='$link' class='active_link'>$page</a></li>";
-                            } else {
-                                echo "<li><a href='$link'>$page</a></li>";                                
+
+                        if (($_SESSION['user_admin']) === true){
+                            if ($page == "Главная" || $page == "Заявки" || $page == "Выйти"){
+                                if ($this_page == $link){
+                                    echo "<li><a href='$link' class='active_link'>$page</a></li>";
+                                } else {
+                                    echo "<li><a href='$link'>$page</a></li>";   
+                                }   
+                            }
+                        } else {
+                            if ($page != "Войти" && $page != "Зарегистрироваться" && $page != "Заявки"){
+                                if ($this_page == $link){
+                                    echo "<li><a href='$link' class='active_link'>$page</a></li>";
+                                } else {
+                                    echo "<li><a href='$link'>$page</a></li>";   
+                                }   
                             }
                         }
                     } else {
-                        // Если не авторизован, показываем только главную, вход и регистрацию
                         if ($page == "Главная" || $page == "Войти" || $page == "Зарегистрироваться") {
-                            // Если текущая страница совпадает с ссылкой, добавляем класс active_link
                             if ($this_page == $link){
                                 echo "<li><a href='$link' class='active_link'>$page</a></li>";
                             } else {
-                                echo "<li><a href='$link'>$page</a></li>";                                
-                            }
+                                echo "<li><a href='$link'>$page</a></li>";   
+                            }   
                         }
                     }
                 }
@@ -80,5 +88,3 @@
     </div>
 
 
-</body>
-</html>

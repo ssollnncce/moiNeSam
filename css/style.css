@@ -44,6 +44,20 @@ form{
     margin-bottom: 20vh;
 }
 
+a{
+    color: black;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+h4{
+    font-size: var(--medium-text);
+}
+
+select, option{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 /* -------ГЛАВНАЯ СТРАНИЦА -- MAIN PAGE ------- */
 
 /* ШАПКА САЙТА */
@@ -105,6 +119,10 @@ form{
 
 /* ОТЗЫВЫ */
 
+.feedbacks{
+    margin: 0;
+}
+
 .feedbacks h2{
     font-size: var(--medium-text);
     margin: 0 0 5vh 0;
@@ -165,7 +183,7 @@ form{
 }
 .footer__logo {
     font-size: var(--medium-text);
-    margin: 0px;
+    margin: 10px 0 0 0;
     color: var(--aqua-color);
 }
 .footer__logo h4{
@@ -312,4 +330,83 @@ form{
 #registration_form label{
     color: red;
     font-size: var(--tiny-text);
+}
+
+
+/* -------СОЗДАТЬ ЗАЯВКУ--CREATE ORDER------- */
+
+
+#create_orders{
+    width: 100%;
+    padding: 0 clamp(30px, 10vw, 500px);
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.order__input-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 1vw;
+}
+.order__input-container-2 {
+    display: flex;
+    flex-direction: column;
+}
+.order__input-container-2 input:not(#custom_type_check), textarea{
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: clamp(2px, 1vw, 15px);
+    min-width: 30vw;
+    max-width: 50vw;
+}
+.order__input-container-2 select {
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: clamp(2px, 1vw, 15px);
+    min-width: 30vw;
+    max-width: 30vw;
+}    
+
+#custom-type__text{
+    height: 20vh;
+    display: block;
+    visibility: hidden;
+}
+
+#payment_card, #payment_cash{
+    display: none;
+}
+
+.payment_container{
+    display: flex;
+    width: 50%;
+    padding: 0 5% 0 5%;
+    gap: 1vw;
+}
+
+.payment-label{
+    width: 10vw;
+    border: 5px solid black;
+    border-radius: 1rem;
+    padding: clamp(2px, 1vw, 15px);
+}
+
+.order__input-container-2 input[type='radio']:checked + label{
+    border: 5px solid var(--aqua-color);
+}
+
+#order-submit{
+    padding: clamp(2px, 1vw, 15px);
+    border: none;
+    background-color: var(--aqua-color);
+    border-radius: 1rem;
+}
+
+.order_submit{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1vw 0 1vw 0;
 }

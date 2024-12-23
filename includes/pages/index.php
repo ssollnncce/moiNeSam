@@ -4,7 +4,6 @@
 require '../config/config.inc.php';
 
 // Устанавливаем идентификатор пользователя в сессию
-// $_SESSION['user_id'] = 1;
 
 // Подключаем файл с настройками для работы с MySQL
 require MYSQL;
@@ -14,7 +13,7 @@ include 'header.html';
 
 ?>
 
-<section class="main-content chapter">
+<section class="main-content">
 
     <div class="banner chapter">
         <div class="banner__content">
