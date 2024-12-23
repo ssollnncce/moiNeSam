@@ -410,3 +410,23 @@ select, option{
     justify-content: center;
     margin: 1vw 0 1vw 0;
 }
+
+/* -------ВСЕ ЗАКАЗЫ--ALL ORDERS------- */
+
+.all_orders{
+    width: 100%;
+    padding: 0 10vw 0 10vw;
+}
+
+.order{
+    width: 100%;
+    background-color: var(--light-aqua-color);
+    border-radius: 2rem;
+    padding: clamp(2px, 1vw, 15px);
+    margin: 10px 0 10px 0;
+}
+.order__logo{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
