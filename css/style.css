@@ -195,7 +195,7 @@ form{
 
 /* Окно регистрации */
 
-.registration {
+.registration, .authorization {
     width: 100vw;
     height: 90vh;
     display: flex;
@@ -203,7 +203,7 @@ form{
     align-items: center;
 }
 
-.registration__content {
+.registration__content, .authorization__content{
     width: 40vw;
     height: fit-content;
     background-color: var(--gray-color);
@@ -307,4 +307,9 @@ form{
     font-size: var(--small-text);
 }
 
+/* -------АВТОРИЗАЦИЯ--AUTHORIZATION------- */
 
+#registration_form label{
+    color: red;
+    font-size: var(--tiny-text);
+}
