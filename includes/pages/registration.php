@@ -1,32 +1,41 @@
 <?php
+/**
+ * Файл регистрации пользователя.
+ * 
+ * Подключает конфигурационный файл и файл с настройками базы данных.
+ * Обрабатывает форму регистрации, проверяет введенные данные и добавляет нового пользователя в базу данных.
+ */
 
-require '../config/config.inc.php';
+require '../config/config.inc.php'; // Подключение конфигурационного файла
+require MYSQL; // Подключение файла с настройками базы данных
 
-require MYSQL;
+$reg_errors = array(); // Массив для хранения ошибок регистрации
 
-$reg_errors = array(
-);
-
+// Проверка, была ли отправлена форма методом POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Проверка имени
     if (preg_match('/^[A-Za-zА-Яа-я \'.-]{2,45}$/u', $_POST['first_name'])) {
-		$fn = escape_data($_POST['first_name'], $dbc);
-	} else {
-		$reg_errors['first_name'] = 'Пожалуйста, укажите свое имя!';
-	}
+        $fn = escape_data($_POST['first_name'], $dbc);
+    } else {
+        $reg_errors['first_name'] = 'Пожалуйста, укажите свое имя!';
+    }
 
+    // Проверка фамилии
     if (preg_match('/^[A-Za-zА-Яа-я \'.-]{2,45}$/u', $_POST['second_name'])) {
-		$sn = escape_data($_POST['second_name'], $dbc);
-	} else {
-		$reg_errors['second_name'] = 'Пожалуйста, введите фамилию!';
-	}
+        $sn = escape_data($_POST['second_name'], $dbc);
+    } else {
+        $reg_errors['second_name'] = 'Пожалуйста, введите фамилию!';
+    }
 
+    // Проверка отчества
     if (preg_match('/^[A-Za-zА-Яа-я \'.-]{2,45}$/u', $_POST['patronomyc'])) {
-		$pt = escape_data($_POST['patronomyc'], $dbc);
-	} else {
-		$reg_errors['patronomyc'] = 'Пожалуйста, введите отчество!';
-	}
+        $pt = escape_data($_POST['patronomyc'], $dbc);
+    } else {
+        $reg_errors['patronomyc'] = 'Пожалуйста, введите отчество!';
+    }
 
+    // Проверка логина
     if (preg_match('/^[A-Za-z0-9_-]{5,20}$/', $_POST['username'])) {
         $username = escape_data($_POST['username'], $dbc);
 
@@ -41,40 +50,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $reg_errors['username'] = 'Логин должен быть длиной от 5 до 20 символов и содержать только латинские буквы, цифры, тире или подчеркивание.';
     }
 
+    // Проверка email
     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === $_POST['email']) {
-		$e = escape_data($_POST['email'], $dbc);
-	} else {
-		$reg_errors['email'] = 'Пожалуйста, укажите корректный адрес электронной почты!';
-	}
+        $e = escape_data($_POST['email'], $dbc);
+    } else {
+        $reg_errors['email'] = 'Пожалуйста, укажите корректный адрес электронной почты!';
+    }
 
+    // Проверка пароля
     if (preg_match('/^(\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*){6,}$/', $_POST['password']) ) {
-		$p = $_POST['password'];
-	} else {
-		$reg_errors['password'] = 'Пожалуйста, введите корректный пароль!';
-	}
+        $p = $_POST['password'];
+    } else {
+        $reg_errors['password'] = 'Пожалуйста, введите корректный пароль!';
+    }
 
+    // Проверка номера телефона
     if (preg_match('/^(\+7|8)?\d{10}$/', $_POST['phone']) ) {
-		$pho = $_POST['phone'];
-	} else {
-		$reg_errors['phone'] = 'Пожалуйста, введите корректный номер телефона!';
-	}
+        $pho = $_POST['phone'];
+    } else {
+        $reg_errors['phone'] = 'Пожалуйста, введите корректный номер телефона!';
+    }
 
+    // Если ошибок нет, добавление пользователя в базу данных
     if (empty($reg_errors)) {
-
         $q = "INSERT INTO users (first_name, second_name, patronomyc, login, password, email, phone, role) VALUES ('$fn', '$sn', '$pt', '$username', '". password_hash($p, PASSWORD_BCRYPT) . "' , '$e', '$pho', 'member')";
         $r = mysqli_query($dbc, $q);
 
         if (mysqli_affected_rows($dbc) === 1) {
-	
             $uid = mysqli_insert_id($dbc);
             $_SESSION['reg_user_id']  = $uid;
-             
-            header("Location: login.php");
+            header("Location: login.php"); // Перенаправление на страницу входа
         }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-    <div class="main-page">
+    <div class="main-page__link">
         <p><a href="index.php"><span>&#8592;</span> На главную</a></p>
     </div>
 
@@ -102,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <form action="registration.php" method="post" accept-charset="utf-8" id="registration_form">
+                <!-- Форма регистрации пользователя -->
 
                 <div class="input-container">
 
@@ -154,6 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <div class="input-group">
                         <input name="password" type="password" placeholder="Введите пароль">
+                        <label for="password" class="password__description">Пароль должен быть минимум 6 символов и должен содержать цифры и латинские символы верхнего и нижнего регистра</label>
                         <label><?php if (!empty($reg_errors['password'])){
                             echo $reg_errors['password'];
                         }?></label>

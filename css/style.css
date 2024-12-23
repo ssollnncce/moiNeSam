@@ -168,6 +168,9 @@ form{
     margin: 0px;
     color: var(--aqua-color);
 }
+.footer__logo h4{
+    margin: 0 0 10px 0;
+}
 .copyright {
     background-color: var(--aqua-color);
     border-radius: 0.8rem;
@@ -179,13 +182,18 @@ form{
 
 /* -------РЕГИСТРАЦИЯ--REGISTRATION------- */
 
-.main-page{
+
+/* Ссылка на главную страницу */
+
+.main-page__link{
     padding-left: clamp(2px, 1vw, 10px);
 }
 
-.main-page a:hover{
+.main-page__link a:hover{
     color: var(--aqua-color);
 }
+
+/* Окно регистрации */
 
 .registration {
     width: 100vw;
@@ -197,13 +205,14 @@ form{
 
 .registration__content {
     width: 40vw;
-    height: 80vh;
+    height: fit-content;
     background-color: var(--gray-color);
     border-radius: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: clamp(4px, 1vh, 20px);
 }
 
 #registration_form{
@@ -216,6 +225,8 @@ form{
     gap: 0.8vh;
 }
 
+/* Блок input (все input в форме) */
+
 .input-container{
     padding: 1vw;
     background-color: var(--aqua-color);
@@ -226,6 +237,8 @@ form{
     align-items: center;
     gap: 1vh;
 }
+
+/* Группа input + label */
 
 .input-group {
     display: flex;
@@ -238,13 +251,25 @@ form{
     border: none;
     font-family: Arial, Helvetica, sans-serif;
     padding: clamp(2px, 1vw, 30px);
+    font-size: var(--tiny-text);
 
 }
 
-.input-group label{
+.input-group label:not(.password__description){
     margin-top: 5px;
     color: red;
+    font-size: var(--tiny-text);
 }
+
+/* Правило для label (описание пароля) */
+
+.password__description{
+    color: var(--gray-color);
+    font-size: 1rem;
+    margin-top: 2px;
+}
+
+/* Группа для двух маленьких input (Фамилия и Имя) */
 
 .input-group-2 {
 
@@ -263,11 +288,15 @@ form{
     border-radius: 1rem;
     border: none;
     padding: clamp(2px, 1vw, 15px);
+    font-size: var(--tiny-text);
 }
 
 .input-group-2__container label {
     color: red;
+    font-size: var(--tiny-text);
 }
+
+/* Кнопка "Зарегистрироваться" */
 
 #registration_submit{
     padding: clamp(2px, 1vw, 15px);
@@ -277,3 +306,5 @@ form{
     border-radius: 1rem;
     font-size: var(--small-text);
 }
+
+
