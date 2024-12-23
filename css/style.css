@@ -198,6 +198,44 @@ select, option{
     padding: 0.2rem;
 }
 
+/* -------ГЛАВНАЯ СТРАНИЦА--MAIN PAGE------- (mobile)*/
+
+@media (max-width: 768px) {
+
+    .header{
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .nav_links{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .banner {
+        height: 30vh;
+    }
+
+    .banner__content h1 {
+        font-size: 1.5rem;
+    }
+
+    .feedbacks__content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .feedback {
+        width: 100%;
+    }
+
+    .footer__content {
+        padding: 0 10px;
+    }
+}
+
+
 /* -------РЕГИСТРАЦИЯ--REGISTRATION------- */
 
 
@@ -332,6 +370,120 @@ select, option{
     font-size: var(--tiny-text);
 }
 
+/* -------АВТОРИЗАЦИЯ--AUTHORIZATION------- РЕГИСТРАЦИЯ--REGISTRATION--(mobile)*/
+
+@media (max-width: 375px) {
+
+    /* Окно регистрации */
+    .registration__content, .authorization__content {
+        width: 90vw; /* Уменьшаем ширину формы */
+        padding: 10px; /* Уменьшаем отступы */
+    }
+
+    /* Форма регистрации */
+    #registration_form {
+        width: 100%;
+        padding: 10px;
+        gap: 1vh;
+    }
+
+    /* Блок input */
+    .input-container {
+        padding: 1.5vw; /* Увеличиваем отступы для улучшения пропорций */
+        gap: 1vh;
+    }
+
+    .input-group input {
+        font-size: 14px; /* Уменьшаем размер шрифта для удобства */
+        padding: 12px; /* Уменьшаем padding */
+    }
+
+    /* Кнопка "ВОЙТИ" */
+    #registration_submit {
+        padding: 12px 0;
+        font-size: 14px; /* Уменьшаем размер шрифта */
+    }
+
+    /* Лейблы ошибок */
+    .input-group label {
+        font-size: 12px; /* Уменьшаем размер текста для ошибок */
+    }
+
+    /* Логотип */
+    .authorization-logo h4 {
+        font-size: 1.5rem; /* Уменьшаем размер шрифта для логотипа */
+    }
+}
+
+@media (max-width: 375px) {
+
+    /* Окно регистрации */
+    .registration__content, .authorization__content {
+        width: 90vw; /* Уменьшаем ширину формы */
+        padding: 10px; /* Уменьшаем отступы */
+    }
+
+    /* Форма регистрации */
+    #registration_form {
+        width: 100%;
+        padding: 10px;
+        gap: 1vh;
+    }
+
+    /* Блок input */
+    .input-container {
+        padding: 1.5vw; /* Увеличиваем отступы для улучшения пропорций */
+        gap: 1vh;
+    }
+
+    .input-group input {
+        font-size: 14px; /* Уменьшаем размер шрифта для удобства */
+        padding: 12px; /* Уменьшаем padding */
+    }
+
+    /* Кнопка "Зарегистрироваться" */
+    #registration_submit {
+        padding: 12px 0;
+        font-size: 14px; /* Уменьшаем размер шрифта */
+    }
+
+    /* Лейблы ошибок */
+    .input-group label {
+        font-size: 12px; /* Уменьшаем размер текста для ошибок */
+    }
+
+    /* Логотип */
+    .registration-logo h4 {
+        font-size: 1.5rem; /* Уменьшаем размер шрифта для логотипа */
+    }
+
+    /* Группа для двух маленьких input (Фамилия и Имя) */
+    .input-group-2 {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .input-group-2__container {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-group-2__container input {
+        padding: clamp(2px, 1vw, 15px);
+    }
+
+    /* Лейблы для input */
+    .input-group-2__container label {
+        color: red;
+        font-size: var(--tiny-text);
+    }
+
+    .input-group-2__container input {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
 
 /* -------СОЗДАТЬ ЗАЯВКУ--CREATE ORDER------- */
 
@@ -411,6 +563,44 @@ select, option{
     margin: 1vw 0 1vw 0;
 }
 
+@media (max-width: 480px) {
+
+    #create_orders {
+        padding: 0 5vw;
+    }
+
+    .order__input-container{
+        display: block;
+    }
+
+    .order__input-container-2 input:not(#custom_type_check), textarea {
+        min-width: 85vw; /* Делаем поля еще шире для маленьких экранов */
+        max-width: 90vw;
+    }
+
+    .order__input-container-2 select {
+        min-width: 85vw; /* Расширяем поле выбора */
+        max-width: 90vw;
+    }
+
+    .payment-container {
+        width: 100%;
+        gap: 1.5vw;
+    }
+
+    .payment-label {
+        width: 80%;
+    }
+
+    .order__input-container-2 input[type='radio']:checked + label {
+        border: 5px solid var(--aqua-color);
+    }
+
+    #order-submit {
+        width: 90%; /* Увеличиваем кнопку для мобильных */
+    }
+}
+
 /* -------ВСЕ ЗАКАЗЫ--ALL ORDERS------- */
 
 .all_orders{
@@ -429,4 +619,31 @@ select, option{
     display: flex;
     align-items: center;
     gap: 1vw;
+}
+
+/* -------ВСЕ ЗАКАЗЫ--ALL ORDERS------- (mobile)*/
+
+@media (max-width: 480px) {
+
+    .all_orders {
+        padding: 0 5vw; /* Уменьшаем отступы для малых экранов */
+    }
+
+    .order {
+        padding: 8px; /* Еще уменьшаем отступы на маленьких экранах */
+    }
+
+    .order__logo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .order_description p {
+        font-size: 0.8rem; /* Еще уменьшаем шрифт */
+    }
+
+    .order__logo p {
+        font-size: 0.9rem; /* Уменьшаем шрифт для номера заказа */
+    }
 }
