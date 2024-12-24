@@ -415,7 +415,7 @@ select, option{
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 480px) {
 
     /* Окно регистрации */
     .registration__content, .authorization__content {
@@ -605,12 +605,12 @@ select, option{
 
 .all_orders{
     width: 100%;
+    min-height: 80vh;
     padding: 0 10vw 0 10vw;
 }
 
 .order{
     width: 100%;
-    background-color: var(--light-aqua-color);
     border-radius: 2rem;
     padding: clamp(2px, 1vw, 15px);
     margin: 10px 0 10px 0;
@@ -619,6 +619,13 @@ select, option{
     display: flex;
     align-items: center;
     gap: 1vw;
+}
+
+.red{
+    background-color: salmon;
+}
+.green{
+    background-color: var(--light-aqua-color);
 }
 
 /* -------ВСЕ ЗАКАЗЫ--ALL ORDERS------- (mobile)*/

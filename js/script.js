@@ -40,3 +40,20 @@
     checkbox.addEventListener('change', function () {
         updateSelectState(); // Обновляем состояние при изменении
     });
+
+// Функция для показа/скрытия причины отклонения
+function toggleDeclinedReason(select) {
+    const formId = select.closest('form').querySelector('[name="order_id"]').value;
+    const reasonContainer = document.getElementById('declinedReasonContainer_' + formId);
+    if (select.value === 'declined') {
+        reasonContainer.style.display = 'block';
+    } else {
+        reasonContainer.style.display = 'none';
+    }
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    const selects = document.querySelectorAll('select[name="status"]');
+    selects.forEach(select => toggleDeclinedReason(select));
+});

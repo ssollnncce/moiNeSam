@@ -30,7 +30,7 @@ $type_options = [
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     // Проверка адреса
-    if (preg_match('/^[A-Za-zА-Яа-я \'.-]{2,45}$/u', $_POST['adress'])) {
+    if (preg_match('/^[A-Za-zА-Яа-я \',.-]{2,255}$/u', $_POST['adress'])) {
         $ad = escape_data($_POST['adress'], $dbc);
     } else {
         $create_order_errors['adress'] = 'Пожалуйста, укажите адрес!';
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (empty($_POST['custom_type'])){
         $dc = escape_data($_POST['custom_type'], $dbc);
     } else {
-        if (preg_match('/^[A-Za-zА-Яа-я \'.-]{2,45}$/u', $_POST['custom_type'])) {
+        if (preg_match('/^[A-Za-zА-Яа-я \',.-]{2,255}$/u', $_POST['custom_type'])) {
             $dc = escape_data($_POST['custom_type'], $dbc);
         } else {
             $create_order_errors['custom_type'] = "Укажите описание уборки";
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $r = mysqli_query($dbc, $q);
 
     } else {
-        echo 'Что-то пошло не так'; // Сообщение об ошибке
+        echo 'Что-то пошло не так' . ' ' . $create_order_errors['adress']; // Сообщение об ошибке
     }
 
 }

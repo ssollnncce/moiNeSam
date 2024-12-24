@@ -38,11 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Получаем ID заказа и новый статус
     $order_id = $_POST['order_id'];
     $new_status = $_POST['status'];
+    $declined_reason = $_POST['declined_reason'];
 
     // Проводим валидацию данных
     if (in_array($new_status, ['created', 'in_process', 'accept', 'declined'])) {
         // Обновляем статус заказа в базе данных
-        $query = "UPDATE orders SET status = '$new_status' WHERE id = '$order_id'";
+        $query = "UPDATE orders SET status = '$new_status', decklined_reason = IF('$new_status' = 'declined', '$declined_reason', NULL) WHERE id = '$order_id'";
         $result = mysqli_query($dbc, $query);
 
         if ($result) {
@@ -75,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $custom_type = !empty($order['custom_type']) ? htmlspecialchars($order['custom_type']) : '';
 
-        echo '<div class="order">
+        echo '<div class="order green">
                 <div class="order__logo">
                     <p><b>Номер заказа:</b> ' . htmlspecialchars($order["id"]) . '</p>
                     <p>' . $status_ru . '</p>
@@ -92,18 +93,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 // Форма для изменения статуса
                 echo '<form action="admin_panel.php" method="POST">
-                        <input type="hidden" name="order_id" value="' . $order['id'] . '">
-                        <label for="status">Изменить статус:</label>
-                        <select name="status" id="status">
-                            <option value="created" ' . ($order['status'] == 'created' ? 'selected' : '') . '>Создан</option>
-                            <option value="in_process" ' . ($order['status'] == 'in_process' ? 'selected' : '') . '>В процессе</option>
-                            <option value="accept" ' . ($order['status'] == 'accept' ? 'selected' : '') . '>Принят</option>
-                            <option value="declined" ' . ($order['status'] == 'declined' ? 'selected' : '') . '>Отклонен</option>
-                        </select>
-                        <input type="submit" value="Обновить статус">
-                    </form>
+                <input type="hidden" name="order_id" value="' . $order['id'] . '">
+                <label for="status">Изменить статус:</label>
+                <select name="status" id="status" onchange="toggleDeclinedReason(this)">
+                    <option value="created" ' . ($order['status'] == 'created' ? 'selected' : '') . '>Создан</option>
+                    <option value="in_process" ' . ($order['status'] == 'in_process' ? 'selected' : '') . '>В процессе</option>
+                    <option value="accept" ' . ($order['status'] == 'accept' ? 'selected' : '') . '>Принят</option>
+                    <option value="declined" ' . ($order['status'] == 'declined' ? 'selected' : '') . '>Отклонен</option>
+                </select>
+                <div id="declinedReasonContainer_' . $order['id'] . '" style="display: none;">
+                    <label for="declined_reason_' . $order['id'] . '">Причина отклонения:</label>
+                    <textarea name="declined_reason" id="declined_reason_' . $order['id'] . '" rows="3" placeholder="Укажите причину"></textarea>
                 </div>
-              </div>';
+                <input type="submit" value="Обновить статус">
+            </form>
+        </div>
+    </div>';
     }
     ?>
 </div>
+
+<?php
+
+include 'footer.html';
+
+?>
